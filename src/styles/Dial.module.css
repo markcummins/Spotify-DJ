@@ -1,0 +1,68 @@
+@import url("https://fonts.googleapis.com/css2?family=Rajdhani&display=swap");
+
+.dial {
+  max-width: 800px;
+  padding: 1rem;
+  margin-left: auto;
+  margin-right: auto;
+  font-family: "Rajdhani", sans-serif;
+}
+
+div.freq {
+  display: grid;
+  color: #20D561;
+  font-size: 1.4rem;
+  grid-template-columns: 64px auto;
+  font-weight: 600;
+  align-items: center;
+  /* text-shadow: 0 0 4px #20D561, 0 0 8px #20D561; */
+}
+
+.freqA {
+  margin: 3px 0;
+  display: grid;
+  grid-template-columns: 10fr 10fr 10fr 6fr 6fr 10fr 10fr;
+}
+
+.freqB {
+  margin: 3px 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+}
+
+.divider {
+  display: grid;
+  grid-template-columns: 64px auto;
+  grid-column-gap: 4px;
+}
+
+.divider .dividerLead {
+  padding: 0px 8px;
+}
+
+.divider .dividerLead,
+.divider .dividerLeds>div {
+  color: #333;
+  font-weight: 700;
+  font-size: 0.75rem;
+  /* box-shadow: 0 0 2px #20D561, 0 0 4px #20D561;
+  text-shadow: 0 0 10px #333, 0 0 20px #333; */
+}
+
+.divider .dividerLead {
+  background: #20D561;
+  text-align: right;
+}
+
+.divider .dividerLeds {
+  display: grid;
+  grid-template-columns:
+    repeat(3, 1fr) 2fr repeat(3, 1fr) 2fr repeat(3, 1fr) 2fr repeat(3, 1fr) 2fr repeat(3, 1fr) 2fr repeat(3, 1fr) 2fr repeat(3, 1fr) 2fr;
+  grid-column-gap: 4px;
+
+}
+
+.divider .dividerLeds>div {
+  background: #20D561;
+  text-align: center;
+}

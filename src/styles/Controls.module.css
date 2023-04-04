@@ -1,0 +1,28 @@
+.controls {
+  display: flex;
+  margin-top: 5rem;
+  justify-content: center;
+}
+
+.albumDetails {
+  padding: 20px;
+  text-align: center
+}
+
+.trackControls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.trackControls svg {
+  color: var(--color-primary);
+  scale: 1;
+  transition: scale .2s ease, color .2s ease;
+}
+
+.trackControls svg:hover {
+  scale: 1.1;
+  color: var(--color-primary-200);
+}
