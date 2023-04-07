@@ -7,13 +7,18 @@ import { useApp } from '@/context/app'
 import { useSpotify } from '@/context/spotify'
 import { useState, useEffect } from 'react'
 
+import { getRefreshAccessToken } from '@/utils/spotify'
+
 export default function Layout({ children }) {
   const { theme } = useApp();
   const {
+    setDeviceId,
     setAuthorized,
 
-    setDeviceId,
     accessToken,
+    setAccessToken,
+
+    refreshToken,
 
     spotifyPlayer,
     setSpotifyPlayer,
@@ -85,6 +90,17 @@ export default function Layout({ children }) {
 
   const spotifyAuthenticationError = ({ message }) => {
     setAuthorized({ state: false, message: message });
+
+    console.log('refresh??');
+    // getRefreshAccessToken().then((response: any) => {
+    // console.log(response);
+    //     if (response.status === 200) {
+    // setAccessToken(response.data.access_token);
+    //       console.log('Token Refreshed', );
+    //     }
+    //   }).catch((err: any) => {
+    //     console.log('err', err);
+    //   });
   }
 
   const spotifyAccountError = ({ message }) => {

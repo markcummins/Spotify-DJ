@@ -12,6 +12,7 @@ import Controls from '@/components/controls';
 export default function Radio() {
   const [DJScript, setDJScript] = useState('');
   const [DJSpeaking, setDJSpeaking] = useState(false);
+  const [audioOutputDevice, setAudioOutputDevice] = useState<any>(null);
   const [previousSongId, setPreviousSongId] = useState(null);
 
   const [adFrequency] = useState(3);
@@ -42,13 +43,20 @@ export default function Radio() {
     }
 
     if (!previousSongId || spotifyState.track_window.current_track.id !== previousSongId) {
-      setPreviousSongId(spotifyState.track_window.current_track.id);
-
       console.log('new song detected', spotifyState.track_window.current_track.id, previousSongId);
-
+      
       setDJScript('');
       setSongCount(songCount + 1);
+      setPreviousSongId(spotifyState.track_window.current_track.id);
 
+      if(DJSpeaking === true){
+        setDJSpeaking(false);
+        
+        spotifyPlayer.setVolume(.5);
+        if(audioOutputDevice){
+          audioOutputDevice.pause();
+        }
+      }
     }
 
   }, [spotifyState]);
@@ -69,12 +77,11 @@ export default function Radio() {
       setDJSpeaking(true);
       fadeVolumeDown(.1, 500);
 
-      speak(DJScript, station.dj, () => {
-        setDJSpeaking(false);
-
-        spotifyPlayer.setVolume(.5);
+      const {speaker, synth} = speak(DJScript, station.dj, () => {
         spotifyPlayer.nextTrack();
       });
+
+      setAudioOutputDevice(speaker);
     }
   }, [timeRemaining]);
 

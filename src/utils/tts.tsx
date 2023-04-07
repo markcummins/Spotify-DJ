@@ -28,6 +28,11 @@ const tts = (sentence: string, dj: { lang: any; gender: any; name: any; style: a
       console.log(error);
       speechSynthesizer.close();
     });
+
+  return {
+    speaker: destination, 
+    synth: speechSynthesizer
+  };
 }
 
 export default tts;

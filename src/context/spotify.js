@@ -32,13 +32,19 @@ const Provider = ({ children }) => {
         'Authorization': `Bearer ${accessToken}`
       },
       data: { context_uri: playlistId },
+    }).then(()=>{
+      console.log('playPlaylist');
+    }).catch((error)=>{
+      console.log('error',error);
     }).finally(function () {
-      shuffleMusic();
+      shuffleMusic().then(()=>{
+        spotifyPlayer.seek(Math.floor(Math.random() * 60) * 1000);
+      });
     });
   }
 
   const shuffleMusic = () => {
-    axios({
+    return axios({
       method: 'put',
       url: `https://api.spotify.com/v1/me/player/shuffle?device_id=${deviceId}&state=true`,
       headers: {

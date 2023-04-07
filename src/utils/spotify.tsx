@@ -5,12 +5,7 @@ const clientId = process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID;
 const clientSecret = process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_SECRET;
 const basic = Buffer.from(`${clientId}:${clientSecret}`).toString('base64');
 
-console.log(clientId, clientSecret);
-
-
 export const getAccessToken = (code: string) => {
-  console.log('basic', basic);
-
   return axios({
     url: 'https://accounts.spotify.com/api/token',
     method: 'post',
@@ -19,14 +14,15 @@ export const getAccessToken = (code: string) => {
       'content-type': 'application/x-www-form-urlencoded',
     },
     data: queryString.stringify({
-      grant_type: 'authorization_code',
       code: code,
+      // expires_in: 30,
+      grant_type: 'authorization_code',
       redirect_uri: 'http://localhost:3000/callback/',
     })
   })
 }
 
-export const refreshAccessToken = (code: string) => {
+export const getRefreshAccessToken = (refreshToken: string) => {
   return axios({
     url: 'https://accounts.spotify.com/api/token',
     method: 'post',
@@ -35,9 +31,8 @@ export const refreshAccessToken = (code: string) => {
       'content-type': 'application/x-www-form-urlencoded',
     },
     data: queryString.stringify({
-      grant_type: 'authorization_code',
-      code: code,
-      redirect_uri: 'http://localhost:3000/callback/',
+      grant_type: 'refresh_token',
+      refresh_token: refreshToken,
     })
-  });
+  });  
 }
