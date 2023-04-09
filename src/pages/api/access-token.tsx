@@ -13,6 +13,11 @@ export default async function handler(req, res) {
   } = req
 
   switch (method) {
+    case 'GET':
+      const baseUrl = `${req.headers.host}`;
+      const protocol = req.headers['x-forwarded-proto'] || 'http';
+
+      res.status(200).json({ url: `${protocol}://${baseUrl}/callback/` });
     case 'POST':
       try {
         const response = await axios({
