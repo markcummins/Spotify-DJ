@@ -2,7 +2,7 @@
 import Head from 'next/head'
 
 import speak from '@/utils/tts'
-import chatGPT from '@/utils/chatGPT'
+import axios from "axios";
 
 import { useState, useEffect } from 'react'
 import { useSpotify } from '@/context/spotify'
@@ -63,9 +63,15 @@ export default function Radio() {
 
   useEffect(() => {
     if (timeRemaining === 60 && songCount % adFrequency === 1) {
-      chatGPT(station.script, spotifyState.track_window).then((response) => {
+      axios({
+        method: 'post',
+        url: `/api/script`,
+        data: {
+          script: station.script,
+          trackWindow: spotifyState.track_window,
+        }
+      }).then((response) => {
         setDJScript(response.data.choices[0].message.content);
-        console.log('script out:', response.data.choices[0].message.content);
       }).catch((error) => {
         console.log(error);
       });

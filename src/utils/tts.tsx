@@ -30,7 +30,7 @@ const tts = (sentence: string, dj: { lang: any; gender: any; name: any; style: a
     });
 
   return {
-    speaker: destination, 
+    speaker: destination,
     synth: speechSynthesizer
   };
 }

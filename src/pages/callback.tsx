@@ -1,10 +1,12 @@
 import Head from 'next/head'
 
+import axios from "axios";
+import queryString from 'querystring'
+
 import { useEffect } from 'react'
 import Router, { useRouter } from "next/router";
 
 import { useSpotify } from '@/context/spotify'
-import { getAccessToken } from '@/utils/spotify'
 
 import { Gift } from '@carbon/icons-react';
 import styles from '@/styles/Callback.module.css'
@@ -21,7 +23,13 @@ export default function Callback() {
 
   useEffect(() => {
     if (query.code) {
-      getAccessToken(query.code as string).then((response: any) => {
+      axios({
+        method: 'post',
+        url: `/api/access-token`,
+        data: queryString.stringify({
+          code: query.code,
+        })
+      }).then((response: any) => {
         if (response.status === 200) {
 
           setAuthorized({ state: true, message: null });

@@ -6,7 +6,6 @@ import { useSpotify } from '@/context/spotify'
 import { useState, useEffect } from 'react'
 
 import styles from '@/styles/Layout.module.css'
-import { getRefreshAccessToken } from '@/utils/spotify'
 
 export default function Layout({ children }) {
   const { theme } = useApp();
@@ -48,7 +47,14 @@ export default function Layout({ children }) {
 
           if (accessTokenSecondsRemaining < 3580) {
             console.log('get refreshed OAuthToken');
-            getRefreshAccessToken(refreshToken).then((response) => {
+
+            axios({
+              method: 'post',
+              url: `/api/refresh-token`,
+              data: queryString.stringify({
+                token: refreshToken,
+              })
+            }).then((response) => {
               console.log('getRefreshAccessToken', response);
 
               if (response.status === 200) {

@@ -31,28 +31,32 @@ const scopes = [
   'user-read-private',
 ];
 
+const getStateKey = () => {
+  let stateKey = '';
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  const charactersLength = characters.length;
+  let counter = 0;
+
+  while (counter < 16) {
+    stateKey += characters.charAt(Math.floor(Math.random() * charactersLength));
+    counter += 1;
+  }
+
+  return stateKey;
+}
+
+const qpParams = {
+  response_type: 'code',
+  scope: scopes.join(' '),
+  client_id: process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID,
+  redirect_uri: 'http://localhost:3000/callback/',
+  state: getStateKey(),
+};
+
 export default function Home() {
   const [qp, setQp] = useState("");
 
   useEffect(() => {
-    let stateKey = '';
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    const charactersLength = characters.length;
-    let counter = 0;
-
-    while (counter < 16) {
-      stateKey += characters.charAt(Math.floor(Math.random() * charactersLength));
-      counter += 1;
-    }
-
-    const qpParams = {
-      response_type: 'code',
-      scope: scopes.join(' '),
-      client_id: process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID,
-      redirect_uri: 'http://localhost:3000/callback/',
-      state: stateKey,
-    };
-
     setQp(queryString.stringify(qpParams));
   }, []);
 

@@ -49,33 +49,46 @@ const generateScript = (script: any, currentTrack: any, nextTrack: any) => {
   return renderedScript;
 }
 
-// https://platform.openai.com/docs/api-reference/chat/create
-const chatGPT = (script: any, trackWindow: any) => {
-  const key = process.env.NEXT_PUBLIC_GPT_KEY;
+export default async function handler(req, res) {
+  const {
+    body,
+    method,
+  } = req
 
-  const { currentTrack, nextTrack } = getTracks(trackWindow);
-  const generatedScript = generateScript(script, currentTrack, nextTrack);
-  console.log('script in:', generatedScript);
+  switch (method) {
+    case 'POST':
+      try {
+        const key = process.env.GPT_KEY;
 
-  return axios.post(
-    'https://api.openai.com/v1/chat/completions',
-    {
-      model: "gpt-3.5-turbo",
-      messages: [
-        { "role": "system", "content": script.role },
-        { "role": "user", "content": generatedScript }
-      ],
-      n: 1,
-      temperature: .5,
-      max_tokens: 240,
-    },
-    {
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${key}`
+        const { currentTrack, nextTrack } = getTracks(body.trackWindow);
+        const generatedScript = generateScript(body.script, currentTrack, nextTrack);
+
+        const response = await axios.post(
+          'https://api.openai.com/v1/chat/completions',
+          {
+            model: "gpt-3.5-turbo",
+            messages: [
+              { "role": "system", "content": body.script.role },
+              { "role": "user", "content": generatedScript }
+            ],
+            n: 1,
+            temperature: .5,
+            max_tokens: 240,
+          },
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${key}`
+            }
+          }
+        );
+
+        res.status(response.status).json(response.data)
       }
-    }
-  );
-}
+      catch (err: any) {
+        res.status(err.response.status).json(err.response.data)
+      }
 
-export default chatGPT;
+      break
+  }
+}
