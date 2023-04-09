@@ -53,7 +53,7 @@ export default function Home() {
       response_type: 'code',
       scope: scopes.join(' '),
       client_id: process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID,
-      redirect_uri: `${window.location.protocol}//${window.location.host}/callback/`,
+      redirect_uri: `${process.env.NEXT_PUBLIC_BASE_URL}/callback/`,
       state: getStateKey(),
     };
 

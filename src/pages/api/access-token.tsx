@@ -17,7 +17,7 @@ export default async function handler(req, res) {
       const baseUrl = `${req.headers.host}`;
       const protocol = req.headers['x-forwarded-proto'] || 'http';
 
-      res.status(200).json({ url: `${protocol}://${baseUrl}/callback/` });
+      res.status(200).json({ url: `${process.env.NEXT_PUBLIC_BASE_URL}/callback/` });
     case 'POST':
       try {
         const response = await axios({
@@ -30,7 +30,7 @@ export default async function handler(req, res) {
           data: queryString.stringify({
             code: body.code,
             grant_type: 'authorization_code',
-            redirect_uri: `${window.location.protocol}//${window.location.host}/callback/`,
+            redirect_uri: `${process.env.NEXT_PUBLIC_BASE_URL}/callback/`,
           })
         });
 
