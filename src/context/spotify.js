@@ -1,4 +1,5 @@
 import axios from "axios";
+import { FastAverageColor } from 'fast-average-color';
 import { createContext, useState, useEffect, useMemo, useContext } from "react";
 
 import { stations } from '@/utils/stations';
@@ -8,6 +9,7 @@ const Context = createContext();
 const Provider = ({ children }) => {
   const [deviceId, setDeviceId] = useState("");
   const [accessToken, setAccessToken] = useState("");
+  const [accessTokenExpiry, setAccessTokenExpiry] = useState();
   const [refreshToken, setRefreshToken] = useState("");
 
   const [spotifyPlayer, setSpotifyPlayer] = useState(null);
@@ -22,8 +24,38 @@ const Provider = ({ children }) => {
   const [stationId, setStationId] = useState('circuitRadio');
   const [station, setStation] = useState(stations.circuitRadio);
 
-  const playPlaylist = (station) => {
-    const playlistId = `spotify${station.user}${station.id}`;
+  const [colors, setColors] = useState(null);
+
+  const playPlaylist = async (station) => {
+
+    const playlistId = (station.user.length === 0)
+      ? `spotify:playlist:${station.id}`
+      : `spotify:user:${station.user}:playlist:${station.id}`;
+
+    let playlistSize = 0;
+    try {
+      const response = await axios({
+        method: 'get',
+        url: `https://api.spotify.com/v1/playlists/${station.id}?fields=tracks.total`,
+        headers: {
+          'content-type': 'application/json',
+          'Authorization': `Bearer ${accessToken}`
+        },
+      });
+
+      playlistSize = response.data.tracks.total;
+    } catch (error) {
+      console.log(error);
+    }
+
+    console.log({
+      context_uri: playlistId,
+      offset: {
+        position: Math.floor(Math.random() * playlistSize)
+      },
+      position_ms: Math.floor(Math.random() * 60) * 1000,
+    });
+
     axios({
       method: 'put',
       url: `https://api.spotify.com/v1/me/player/play?device_id=${deviceId}`,
@@ -31,19 +63,23 @@ const Provider = ({ children }) => {
         'content-type': 'application/json',
         'Authorization': `Bearer ${accessToken}`
       },
-      data: { context_uri: playlistId },
-    }).then(()=>{
+      data: {
+        context_uri: playlistId,
+        offset: {
+          position: Math.floor(Math.random() * playlistSize)
+        },
+        position_ms: Math.floor(Math.random() * 60) * 1000,
+      },
+    }).then(() => {
       console.log('playPlaylist');
-    }).catch((error)=>{
-      console.log('error',error);
+    }).catch((error) => {
+      console.log('error', error);
     }).finally(function () {
-      shuffleMusic().then(()=>{
-        spotifyPlayer.seek(Math.floor(Math.random() * 60) * 1000);
-      });
+      enableShuffle();
     });
   }
 
-  const shuffleMusic = () => {
+  const enableShuffle = () => {
     return axios({
       method: 'put',
       url: `https://api.spotify.com/v1/me/player/shuffle?device_id=${deviceId}&state=true`,
@@ -156,6 +192,22 @@ const Provider = ({ children }) => {
     playPlaylist(stations[nextStationId].playlist);
   }
 
+  useEffect(() => {
+    if (!spotifyState) {
+      return;
+    }
+
+    const imgSrc = spotifyState.track_window.current_track.album.images[0].url;
+
+    const fac = new FastAverageColor();
+    fac.getColorAsync(imgSrc)
+      .then(color => {
+        setColors(color);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  }, [spotifyState && spotifyState.track_window.current_track.album.images[0].url]);
 
   const exposed = {
     authorized,
@@ -167,14 +219,14 @@ const Provider = ({ children }) => {
     accessToken,
     setAccessToken,
 
+    accessTokenExpiry,
+    setAccessTokenExpiry,
+
     refreshToken,
     setRefreshToken,
 
     spotifyPlayer,
     setSpotifyPlayer,
-
-    shuffleMusic,
-    playPlaylist,
 
     fadeVolumeUp,
     fadeVolumeDown,
@@ -187,6 +239,9 @@ const Provider = ({ children }) => {
 
     station,
     setStation,
+
+    colors,
+    setColors,
 
     startRadio,
     nextStation,

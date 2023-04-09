@@ -1,0 +1,6 @@
+.stationDetails {
+  display: flex;
+  justify-content: center;
+  color: var(--color-highlight);
+  transition: color 3s ease;
+}

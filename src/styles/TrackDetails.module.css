@@ -1,0 +1,8 @@
+.trackDetails h2,
+.trackDetails h3,
+.trackDetails p {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  mix-blend-mode: overlay;
+}

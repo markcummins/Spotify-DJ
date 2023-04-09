@@ -44,16 +44,16 @@ export default function Radio() {
 
     if (!previousSongId || spotifyState.track_window.current_track.id !== previousSongId) {
       console.log('new song detected', spotifyState.track_window.current_track.id, previousSongId);
-      
+
       setDJScript('');
       setSongCount(songCount + 1);
       setPreviousSongId(spotifyState.track_window.current_track.id);
 
-      if(DJSpeaking === true){
+      if (DJSpeaking === true) {
         setDJSpeaking(false);
-        
+
         spotifyPlayer.setVolume(.5);
-        if(audioOutputDevice){
+        if (audioOutputDevice) {
           audioOutputDevice.pause();
         }
       }
@@ -77,7 +77,7 @@ export default function Radio() {
       setDJSpeaking(true);
       fadeVolumeDown(.1, 500);
 
-      const {speaker, synth} = speak(DJScript, station.dj, () => {
+      const { speaker, synth } = speak(DJScript, station.dj, () => {
         spotifyPlayer.nextTrack();
       });
 
@@ -91,14 +91,20 @@ export default function Radio() {
     }
   }, [timeRemaining]);
 
+  const [title, setTitle] = useState('AI Tunes');
+
+  useEffect(() => {
+    if (spotifyState) {
+      setTitle(`AI Tunes |  ${spotifyState.track_window.current_track.name}`);
+    }
+  }, [spotifyState]);
+
   return (
     <>
       <Head>
-        <title>DJ </title>
+        <title>{title}</title>
       </Head>
-      <main>
-        <Controls />
-      </main>
+      <Controls />
     </>
   )
 }

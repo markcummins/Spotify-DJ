@@ -1,12 +1,11 @@
-import Nav from "@/components/nav.jsx"
-import Script from 'next/script';
-
 import Head from 'next/head'
+import Script from 'next/script';
 
 import { useApp } from '@/context/app'
 import { useSpotify } from '@/context/spotify'
 import { useState, useEffect } from 'react'
 
+import styles from '@/styles/Layout.module.css'
 import { getRefreshAccessToken } from '@/utils/spotify'
 
 export default function Layout({ children }) {
@@ -18,22 +17,59 @@ export default function Layout({ children }) {
     accessToken,
     setAccessToken,
 
+    accessTokenExpiry,
+    setAccessTokenExpiry,
+
     refreshToken,
 
     spotifyPlayer,
     setSpotifyPlayer,
 
     setSpotifyState,
+
+    colors,
   } = useSpotify();
 
   const [themeClass, setThemeClass] = useState('');
+
   const [spotifyMounted, setSpotifyMounted] = useState(false)
+  const [spotifyPlayerConnected, setSpotifyPlayerConnected] = useState(false)
+  const [cssVars, setCssVars] = useState({})
 
   useEffect(() => {
     if (spotifyMounted && accessToken.length > 0) {
       const newPlayer = (new Spotify.Player({
         name: 'Spotify DJ.',
-        getOAuthToken: (cb) => { cb(accessToken); },
+        getOAuthToken: (cb) => {
+          console.log('getOAuthToken');
+
+          const currentTime = Math.floor(Date.now() / 1000);
+          const accessTokenSecondsRemaining = (accessTokenExpiry - currentTime);
+
+          if (accessTokenSecondsRemaining < 3580) {
+            console.log('get refreshed OAuthToken');
+            getRefreshAccessToken(refreshToken).then((response) => {
+              console.log('getRefreshAccessToken', response);
+
+              if (response.status === 200) {
+                const currentTimeAferApiCall = Math.floor(Date.now() / 1000);
+
+                setAccessToken(response.data.access_token);
+                setAccessTokenExpiry(currentTimeAferApiCall + response.data.expires_in);
+
+                cb(response.data.access_token);
+                console.log('Token Refreshed');
+              }
+            }).catch((err) => {
+              console.log('err', err);
+            });
+
+            return;
+          }
+
+          console.log('get existing OAuthToken');
+          cb(accessToken);
+        },
         volume: .5
       }));
       setSpotifyPlayer(newPlayer);
@@ -42,8 +78,7 @@ export default function Layout({ children }) {
   }, [spotifyMounted, accessToken]);
 
   useEffect(() => {
-    if (spotifyPlayer) {
-      console.log('setSpotifyPlayer', spotifyPlayer);
+    if (!spotifyPlayerConnected && spotifyPlayer) {
       spotifyPlayer.addListener('ready', (spotifyReady));
       spotifyPlayer.addListener('not_ready', (spotifyOffline));
       spotifyPlayer.addListener('player_state_changed', (spotifyStateChanged));
@@ -56,20 +91,26 @@ export default function Layout({ children }) {
       spotifyPlayer.connect();
     }
 
+  }, [spotifyPlayer]);
+
+  useEffect(() => {
     return () => {
       if (spotifyPlayer) {
         console.log('player disconnected');
         spotifyPlayer.disconnect();
       }
     };
-  }, [spotifyPlayer]);
+  }, []);
 
   const spotifyReady = ({ device_id }) => {
+    console.log('ready', device_id);
     setDeviceId(device_id);
   }
 
   const spotifyStateChanged = (state) => {
+    console.log('spotifyStateChanged', state);
     setSpotifyState(state);
+    setSpotifyPlayerConnected(true);
   }
 
   const spotifyOffline = () => {
@@ -77,11 +118,11 @@ export default function Layout({ children }) {
   }
 
   const spotifyAutoplayFailed = (state) => {
-    console.log('Autoplay is not allowed by the browser autoplay rules');
+    console.log('Autoplay is not allowed by the browser autoplay rules', state);
   }
 
   const spotifyPlaybackError = ({ message }) => {
-    console.log('spotifyPlaybackError');
+    console.log('spotifyPlaybackError', message);
   }
 
   const spotifyInitializationError = ({ message }) => {
@@ -89,41 +130,42 @@ export default function Layout({ children }) {
   }
 
   const spotifyAuthenticationError = ({ message }) => {
+    console.log('spotifyAuthenticationError');
     setAuthorized({ state: false, message: message });
-
-    console.log('refresh??');
-    // getRefreshAccessToken().then((response: any) => {
-    // console.log(response);
-    //     if (response.status === 200) {
-    // setAccessToken(response.data.access_token);
-    //       console.log('Token Refreshed', );
-    //     }
-    //   }).catch((err: any) => {
-    //     console.log('err', err);
-    //   });
   }
 
   const spotifyAccountError = ({ message }) => {
-    console.log('spotifyAccountError');
+    console.log('spotifyAccountError', message);
   }
 
   useEffect(() => {
     setThemeClass(theme.darkMode ? 'theme-dark' : 'theme-light');
   }, [theme]);
 
+  useEffect(() => {
+    console.log('colors', colors);
+    if (colors) {
+      setCssVars({
+        "--color-primary": colors.isLight
+          ? '#0d1116'
+          : '#c2c4c8',
+        "--color-highlight": colors.hex
+      });
+    }
+  }, [colors]);
+
   return (
     <>
       <Head>
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/ai-tunes-mini.svg" />
         <meta name="description" content="Generated by create next app" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=0" />
       </Head>
       <div className={themeClass}>
-        <Nav />
-        {/* <h3>deviceId: {deviceId}</h3> */}
-        {/* {typeof spotifyPlayer} */}
-        {children}
+        <main className={styles.main} style={cssVars}>
+          {children}
+        </main>
       </div>
       <Script id="spotify-player" strategy="lazyOnload" type="text/javascript" async={true} defer={true} src="https://sdk.scdn.co/spotify-player.js" onReady={() => { setSpotifyMounted(true) }} />
     </>

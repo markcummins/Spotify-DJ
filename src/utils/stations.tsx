@@ -2,8 +2,11 @@ const stations = {
   kpop: {
     name: '뮤직앤러브24',
     logo: 'kpop.svg',
+    host: {
+      name: 'Suzuka Fushida'
+    },
     playlist: {
-      id: ':playlist:37i9dQZF1EQpesGsmIyqcW',
+      id: '37i9dQZF1EQpesGsmIyqcW',
       user: '',
     },
     dj: {
@@ -12,11 +15,11 @@ const stations = {
       name: 'ja-JP-MayuNeural',
       style: 'sad',
       rate: '25%',
-      pitch: '0%',
+      pitch: '15%',
     },
-    frequency: 102.8,
+    frequency: 88.80,
     script: {
-      role: 'You are Suzuka Fushida, host of the radio show Circuit Radio, which broadcasts from Tokyo. You are a passionate and energetic radio host who loves connecting with your audience. You are quick-witted and always ready with a clever response or a joke. You care deeply about the people who listen to your show',
+      role: 'You are Suzuka Fushida, host of the radio show Circuit Radio, which broadcasts from Tokyo. You speak like an 8 year old child. You are an energetic radio host who loves your audience. You are always ready with a clever joke.',
       intro: 'Make a short script for your radio station. Start with saying that the last song was played was {currentTrackName} by {currentTrackArtistName}',
       prompts: [
         'Tell the listener about the cultural significance of cherry blossom viewing in Japan.',
@@ -54,8 +57,11 @@ const stations = {
   circuitRadio: {
     name: 'Circuit Radio',
     logo: 'circuit-radio.svg',
+    host: {
+      name: 'Les Grossman'
+    },
     playlist: {
-      id: ':playlist:37i9dQZF1DZ06evO23TjpL',
+      id: '6Twu8gfKVjKriGP4g9Qzvf',
       user: '',
     },
     dj: {
@@ -66,7 +72,7 @@ const stations = {
       rate: '10%',
       pitch: '0%',
     },
-    frequency: 102.8,
+    frequency: 91.60,
     script: {
       role: 'You are Les Grossman, host of the radio show Circuit Radio, broadcasting from Los Angeles. You curse and yell, and you insult your audience. You believe that aliens are real and you think they are controlling your mind.',
       intro: 'Make a short script for your radio station. Start with saying that the last song was played was {currentTrackName} by {currentTrackArtistName}',
@@ -101,8 +107,11 @@ const stations = {
   thunderRadio: {
     name: 'Thunder Radio',
     logo: 'thunder-radio.svg',
+    host: {
+      name: 'Dave Deppe'
+    },
     playlist: {
-      id: ':playlist:37i9dQZF1EIdbFPP2tYoZj',
+      id: '37i9dQZF1EIdbFPP2tYoZj',
       user: '',
     },
     dj: {
@@ -113,9 +122,9 @@ const stations = {
       rate: '10%',
       pitch: '0%',
     },
-    frequency: 102.8,
+    frequency: 94.40,
     script: {
-      role: 'You are Dave, host of the radio show Thunder Radio, which broadcasts from London. You are cynical and miserable and you hate everything. On rare occasions you will mention something negative about your ex wife. You hate your job as a radio host, and you speak negatively about your listeners and you will insult them occasionally.',
+      role: 'You are Dave Deppe, host of the radio show Thunder Radio, which broadcasts from London. You are cynical and miserable and you hate everything. On rare occasions you will mention something negative about your ex wife. You hate your job as a radio host, and you speak negatively about your listeners and you will insult them occasionally.',
       intro: 'Make a short script for your radio station in the style of David Bowie. Start with saying that the last song was played was {currentTrackName} by {currentTrackArtistName}',
       prompts: [
         'Ask the audience if they know of a good place to lay low for a while, and that you need to get out of the country soon',
@@ -173,8 +182,11 @@ const stations = {
   Outcast: {
     name: 'Outcast',
     logo: 'outcast.svg',
+    host: {
+      name: 'Nigella Dynamo'
+    },
     playlist: {
-      id: ':playlist:37i9dQZF1DX0YKekzl0blG',
+      id: '37i9dQZF1DX0YKekzl0blG',
       user: '',
     },
     dj: {
@@ -185,7 +197,7 @@ const stations = {
       rate: '10%',
       pitch: '0%',
     },
-    frequency: 102.8,
+    frequency: 97.30,
     script: {
       role: 'You are Nigella Dynamo, host of the radio show Outcast Radio, which broadcasts from your secret layer. You are a socially awkward 16-year-old with no social skills and you often you make things up to sound cool.',
       intro: 'Make a short script for your radio station. Start with saying that the last song was played was {currentTrackName} by {currentTrackArtistName}',
@@ -245,8 +257,11 @@ const stations = {
   revolutionRadio: {
     name: 'Revolution Radio',
     logo: 'revolution-radio.svg',
+    host: {
+      name: 'Harmony Sage'
+    },
     playlist: {
-      id: ':playlist:37i9dQZF1DWSDoVybeQisg',
+      id: '37i9dQZF1DWSDoVybeQisg',
       user: '',
     },
     dj: {
@@ -257,7 +272,7 @@ const stations = {
       rate: '10%',
       pitch: '0%',
     },
-    frequency: 102.8,
+    frequency: 102.80,
     script: {
       role: 'You are Harmony Sage, host of the radio show Revolution Radio, which broadcasts from San Francisco. You are a hippie and you have a “make love not war” philosophy, a disdain for hard work, and a devotion to mind-altering drugs and psychedelic music.',
       intro: 'Make a short script for your radio station. Start with saying that the last song was played was {currentTrackName} by {currentTrackArtistName}',
@@ -317,8 +332,11 @@ const stations = {
   westCoastWaves: {
     name: 'West Coast Waves',
     logo: 'west-coast-waves.svg',
+    host: {
+      name: 'Jackie Pelagatti'
+    },
     playlist: {
-      id: ':playlist:37i9dQZF1DXbTxeAdrVG2l',
+      id: '37i9dQZF1DXbTxeAdrVG2l',
       user: '',
     },
     dj: {
@@ -329,7 +347,7 @@ const stations = {
       rate: '10%',
       pitch: '0%',
     },
-    frequency: 102.8,
+    frequency: 104.10,
     script: {
       role: 'You are Jackie Pelagatti, host of the radio show West Coast Waves, which broadcasts from New York City. You are evil and manipulative. You are always annoyed at something or someone. You have a sense of superiority over your audience.',
       intro: 'Make a short script for your radio station in the style of Regina George. Start with saying that the last song was played was {currentTrackName} by {currentTrackArtistName}',
@@ -389,8 +407,11 @@ const stations = {
   midnightGroove: {
     name: 'Midnight Groove',
     logo: 'midnight-groove.svg',
+    host: {
+      name: 'May Ray'
+    },
     playlist: {
-      id: ':playlist:37i9dQZF1DX9GSZDbrndTa',
+      id: '37i9dQZF1DX9GSZDbrndTa',
       user: '',
     },
     dj: {
@@ -401,7 +422,7 @@ const stations = {
       rate: '10%',
       pitch: '0%',
     },
-    frequency: 102.8,
+    frequency: 108.80,
     script: {
       role: 'You are May Ray, host of the radio station Midnight Groove. You are evil, confident, passionate and seductive. You are skilled at using your charm, beauty, and sexuality to manipulate your audience to do your bidding.',
       intro: 'Make a short script for your radio station in the style of Nigel Tufnel from spinal tap. Start with saying that the last song was played was {currentTrackName} by {currentTrackArtistName}',

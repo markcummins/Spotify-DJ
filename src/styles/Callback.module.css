@@ -1,8 +1,15 @@
-.main {
+.connecting {
+  height: 100vh;
+  width: 100%;
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
   align-items: center;
-  padding: 6rem;
-  min-height: 100vh;
+  justify-content: center;
+}
+
+.connecting>div {
+  text-align: center;
+}
+
+.connecting {
+  color: var(--color-purple);
 }

@@ -1,12 +1,52 @@
 .controls {
   display: flex;
-  margin-top: 5rem;
   justify-content: center;
 }
 
-.albumDetails {
-  padding: 20px;
-  text-align: center
+.controls>div {
+  width: 100%;
+}
+
+.station {
+  display: flex;
+  justify-content: center;
+}
+
+.trackWrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 400px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  min-height: 120px;
+  column-gap: 20px;
+  row-gap: 8px;
+  overflow: hidden;
+}
+
+.cardHeaderWrap {
+  padding: 1rem 1rem;
+  /* background: var(--color-highlight); */
+}
+
+.cardMainWrap {
+  padding: 2rem;
+  background: var(--color-highlight);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+  transition: background-color 3s ease;
+}
+
+.cardFooterWrap {
+  padding: 1rem 1rem;
+  display: flex;
+  flex-direction: column;
+  row-gap: .3rem;
+  /* background: var(--color-highlight); */
 }
 
 .trackControls {
@@ -24,5 +64,16 @@
 
 .trackControls svg:hover {
   scale: 1.1;
-  color: var(--color-primary-200);
+  color: var(--color-highlight);
+}
+
+@media (min-width:401px) {
+  .controls {
+    padding-top: 5rem;
+  }
+
+  .trackWrap {
+    border-radius: 1.2rem;
+    box-shadow: 0 12px 24px rgb(0 0 0 / 20%);
+  }
 }

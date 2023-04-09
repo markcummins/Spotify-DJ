@@ -15,24 +15,13 @@ export default function AlbumCover({ coverSrc }) {
           exitActive: styles.AlbumExitActive,
         }}
       >
-        <div className={styles.vinylWrap}>
-          <div className={styles.vinyl}>
-            <Image
-              src="/vinyl.png"
-              alt="Vinyl"
-              priority
-              width={120}
-              height={120}
-            />
-          </div>
-          <div className={styles.cover}>
-            <img
-              src={coverSrc}
-              alt="Spotify"
-              width={120}
-              height={120}
-            />
-          </div>
+        <div className={styles.cover}>
+          <img
+            src={coverSrc}
+            alt="Spotify"
+            width={120}
+            height={120}
+          />
         </div>
       </CSSTransition>
     </SwitchTransition>

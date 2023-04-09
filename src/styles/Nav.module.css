@@ -1,9 +1,9 @@
-.nav {
+/* .nav {
   display: flex;
   gap: 15px;
   justify-content: center;
   margin-bottom: 3rem;
   padding: 16px;
-  background: #333;
+  background: var(--color-primary);
   color: #fff;
-}
+} */

@@ -15,7 +15,6 @@ export const getAccessToken = (code: string) => {
     },
     data: queryString.stringify({
       code: code,
-      // expires_in: 30,
       grant_type: 'authorization_code',
       redirect_uri: 'http://localhost:3000/callback/',
     })
@@ -34,5 +33,5 @@ export const getRefreshAccessToken = (refreshToken: string) => {
       grant_type: 'refresh_token',
       refresh_token: refreshToken,
     })
-  });  
+  });
 }
