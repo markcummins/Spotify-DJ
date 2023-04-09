@@ -45,16 +45,8 @@ const Provider = ({ children }) => {
 
       playlistSize = response.data.tracks.total;
     } catch (error) {
-      console.log(error);
+      console.log('error', error);
     }
-
-    console.log({
-      context_uri: playlistId,
-      offset: {
-        position: Math.floor(Math.random() * playlistSize)
-      },
-      position_ms: Math.floor(Math.random() * 60) * 1000,
-    });
 
     axios({
       method: 'put',
