@@ -25,7 +25,7 @@ export default async function handler(req, res) {
           data: queryString.stringify({
             code: body.code,
             grant_type: 'authorization_code',
-            redirect_uri: 'http://localhost:3000/callback/',
+            redirect_uri: `${window.location.protocol}//${window.location.host}/callback/`,
           })
         });
 

@@ -45,18 +45,18 @@ const getStateKey = () => {
   return stateKey;
 }
 
-const qpParams = {
-  response_type: 'code',
-  scope: scopes.join(' '),
-  client_id: process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID,
-  redirect_uri: 'http://localhost:3000/callback/',
-  state: getStateKey(),
-};
-
 export default function Home() {
   const [qp, setQp] = useState("");
 
   useEffect(() => {
+    const qpParams = {
+      response_type: 'code',
+      scope: scopes.join(' '),
+      client_id: process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID,
+      redirect_uri: `${window.location.protocol}//${window.location.host}/callback/`,
+      state: getStateKey(),
+    };
+
     setQp(queryString.stringify(qpParams));
   }, []);
 
