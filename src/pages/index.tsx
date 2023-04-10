@@ -74,6 +74,7 @@ export default function Home() {
               className={styles.vercelLogo}
               width={200}
               height={200}
+              priority={true}
             />
           </a>
         </div>
@@ -87,6 +88,7 @@ export default function Home() {
               src="/stations/circuit-radio.svg"
               alt=""
               width={imgSize}
+              priority={true}
               height={imgSize}
             />
           </div>
@@ -95,6 +97,7 @@ export default function Home() {
               src="/stations/kpop.svg"
               alt=""
               width={imgSize}
+              priority={true}
               height={imgSize}
             />
           </div>
@@ -103,6 +106,7 @@ export default function Home() {
               src="/stations/midnight-groove.svg"
               alt=""
               width={imgSize}
+              priority={true}
               height={imgSize}
             />
           </div>
@@ -111,6 +115,7 @@ export default function Home() {
               src="/stations/outcast.svg"
               alt=""
               width={imgSize}
+              priority={true}
               height={imgSize}
             />
           </div>
@@ -119,6 +124,7 @@ export default function Home() {
               src="/stations/revolution-radio.svg"
               alt=""
               width={imgSize}
+              priority={true}
               height={imgSize}
             />
           </div>
@@ -127,6 +133,7 @@ export default function Home() {
               src="/stations/thunder-radio.svg"
               alt=""
               width={imgSize}
+              priority={true}
               height={imgSize}
             />
           </div>
@@ -135,6 +142,7 @@ export default function Home() {
               src="/stations/west-coast-waves.svg"
               alt=""
               width={imgSize}
+              priority={true}
               height={imgSize}
             />
           </div>

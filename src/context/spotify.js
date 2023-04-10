@@ -153,6 +153,7 @@ const Provider = ({ children }) => {
   }, [pollrateId]);
 
   const startRadio = () => {
+    spotifyPlayer.activateElement();
     playPlaylist(station.playlist);
   }
 
